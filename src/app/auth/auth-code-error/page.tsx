@@ -12,7 +12,7 @@ export default function AuthCodeError() {
         </div>
         <a
           href="/auth/login"
-          className="inline-block bg-blue-600 text-white rounded-lg px-4 py-2 font-medium hover:bg-blue-700"
+          className="inline-block bg-blue-600 text-white px-4 py-2 font-medium hover:bg-blue-700"
         >
           Back to Login
         </a>

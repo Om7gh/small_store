@@ -4,6 +4,6 @@
   --color-background: #1d181e;
   --color-text: #f5f5f5;
   --color-muted: #6b7280;
-  --color-accent: #6366f1;
-  --color-primary: #f97316;
+  --color-accent: oklch(70.4% 0.14 182.503);
+  --color-primary: oklch(60.9% 0.126 221.723);
 }

@@ -20,11 +20,11 @@ function HomeBanner({ product }: { product: ProductType; error?: any }) {
         </h2>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-          <button className="px-6 py-3 bg-accent text-white rounded-lg font-medium hover:bg-accent/90 duration-150">
+          <button className="px-6 py-3 bg-accent text-white  font-medium hover:bg-accent/90 duration-150">
             Shop Now
           </button>
 
-          <button className="px-6 py-3 bg-transparent border border-text text-text rounded-lg font-medium hover:bg-text hover:text-background duration-150">
+          <button className="px-6 py-3 bg-transparent border border-text text-text  font-medium hover:bg-text hover:text-background duration-150">
             Learn More <FaLongArrowAltRight className="inline-block ml-2" />
           </button>
         </div>
@@ -33,7 +33,7 @@ function HomeBanner({ product }: { product: ProductType; error?: any }) {
         <img
           src={product?.image_url}
           alt={product?.name}
-          className="h-65 w-full max-w-140 rounded-2xl object-cover object-center shadow-md sm:h-85 md:h-105"
+          className="h-65 w-full max-w-140  object-cover object-center shadow-md sm:h-85 md:h-105"
         />
       </div>
     </div>

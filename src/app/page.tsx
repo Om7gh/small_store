@@ -1,5 +1,5 @@
 import Home from "@/components/layout/Home";
-import Product from "@/components/layout/Product";
+import Product from "@/components/layout/product/Product";
 import createClient from "@/lib/supabase/server";
 
 export default async function Page() {
@@ -15,11 +15,11 @@ export default async function Page() {
     .from("products")
     .select("*")
     .gt("stock", 0)
-    .limit(8);
+    .limit(6);
   return (
-    <main className="mx-auto my-8 w-full max-w-7xl px-4 sm:px-6 lg:px-8 rounded-2xl">
+    <main className="mx-auto my-8 w-full max-w-7xl px-4 sm:px-6 lg:px-8 ">
       <Home products={lastThreeProducts || []} />
-      <Product products={allProducts || []} />
+      <Product products={allProducts || []} title="Our Latest Products" />
     </main>
   );
 }

@@ -16,6 +16,7 @@ export default async function Page() {
     .select("*")
     .gt("stock", 0)
     .limit(6);
+
   return (
     <main className="mx-auto my-8 w-full max-w-7xl px-4 sm:px-6 lg:px-8 ">
       <Home products={lastThreeProducts || []} />

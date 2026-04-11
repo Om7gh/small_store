@@ -34,7 +34,7 @@ export default function Modal({
       onClick={handleOverlayClick}
     >
       <div
-        className="relative bg-background p-6 rounded-xl shadow-2xl min-w-75 max-w-[90%] z-110"
+        className="relative z-110 mx-4 w-full max-w-2xl rounded-xl bg-background p-4 shadow-2xl sm:p-6"
         onClick={(e) => e.stopPropagation()}
       >
         <button

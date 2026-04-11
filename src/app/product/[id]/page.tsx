@@ -57,11 +57,15 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
           <p className="text-sm font-medium uppercase tracking-[0.18em] text-accent">
             Dictionary Collection
           </p>
+
+          <p className="mt-3 text-xs font-normal text-text px-3 py-1 w-fit shadow bg-primary ">
+            {product.category}
+          </p>
           <h2 className="mt-3 text-3xl font-bold leading-tight text-text sm:text-4xl">
             {product.name}
           </h2>
 
-          <p className="mt-5 text-base leading-7 text-text/80">
+          <p className="mt-3 text-base leading-7 text-text/80">
             {product.description}
           </p>
 
@@ -85,8 +89,12 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
               Quantity
             </label>
             <div className="flex items-center gap-3">
-              <QuantityController />
-              <AddProductToCart product={product} />
+              <QuantityController
+                product={product}
+                productId={product.id}
+                stock={product.stock}
+              />
+              <AddProductToCart product={product} stock={product.stock} />
             </div>
           </div>
 

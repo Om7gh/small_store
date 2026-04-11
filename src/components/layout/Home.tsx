@@ -6,7 +6,8 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { ProductType } from "@/type/ProductType";
-import { FaLongArrowAltRight } from "react-icons/fa";
+import Image from "next/image";
+import Link from "next/link";
 
 function HomeBanner({ product }: { product: ProductType; error?: any }) {
   return (
@@ -19,18 +20,17 @@ function HomeBanner({ product }: { product: ProductType; error?: any }) {
           {product?.description}
         </h2>
 
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-          <button className="px-6 py-3 bg-accent text-white  font-medium hover:bg-accent/90 duration-150">
-            Shop Now
-          </button>
-
-          <button className="px-6 py-3 bg-transparent border border-text text-text  font-medium hover:bg-text hover:text-background duration-150">
-            Learn More <FaLongArrowAltRight className="inline-block ml-2" />
-          </button>
-        </div>
+        <Link
+          href={`/product/${product?.id}`}
+          className="px-6 py-3 bg-accent text-white  font-medium hover:bg-accent/90 duration-150 w-fit"
+        >
+          Shop Now
+        </Link>
       </div>
-      <div className="order-1 grid h-full w-full md:place-items-center md:order-2">
-        <img
+      <div className="order-1 grid h-full w-full md:place-items-center md:order-2 rounded-full overflow-hidden">
+        <Image
+          width={900}
+          height={900}
           src={product?.image_url}
           alt={product?.name}
           className="h-65 w-full max-w-140  object-cover object-center shadow-md sm:h-85 md:h-105"

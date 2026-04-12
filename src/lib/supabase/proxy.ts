@@ -45,7 +45,7 @@ export async function updateSession(request: NextRequest) {
   const user = data?.claims;
   const pathname = request.nextUrl.pathname;
 
-  const protectedRoutes = ["/dashboard"];
+  const protectedRoutes = ["/dashboard", "/checkout"];
   const guestOnlyRoutes = ["/auth/login", "/auth/signin-google"];
 
   const isProtectedRoute = protectedRoutes.some(

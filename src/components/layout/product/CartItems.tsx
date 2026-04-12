@@ -23,7 +23,7 @@ export default function CartItem({
           {product.name}
         </h3>
         <h4 className="text-sm font-semibold text-primary sm:text-base">
-          ${Number(product.price * product.quantity).toFixed(2)}
+          {Number(product.price * product.quantity).toFixed(2)} MAD
         </h4>
         <p className="text-xs text-text/80 sm:text-sm">
           Quantity: {product.quantity}

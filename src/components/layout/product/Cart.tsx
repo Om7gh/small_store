@@ -3,7 +3,7 @@ import useStore from "@/store";
 import CartItem from "./CartItems";
 
 export default function Cart() {
-  const { product, removeProduct } = useStore();
+  const { product, removeProduct, totalPrice } = useStore();
 
   if (product.length === 0)
     return (
@@ -23,7 +23,9 @@ export default function Cart() {
       <p className="mb-4 text-center text-xs text-text/70 sm:text-sm">
         {product.length} {product.length === 1 ? "item" : "items"}
       </p>
-
+      <p className="mb-4 text-right text-xs text-accent font-bold  sm:text-sm">
+        Total: {Number(totalPrice().toFixed(2))} MAD
+      </p>
       <div className="max-h-[52vh] space-y-3 overflow-y-auto pr-1 sm:max-h-[56vh] sm:space-y-4">
         {product.map((product) => (
           <CartItem
@@ -33,7 +35,6 @@ export default function Cart() {
           />
         ))}
       </div>
-
       <div className="mt-5 flex justify-stretch sm:mt-6 sm:justify-end">
         <button className="inline-flex w-full items-center justify-center  bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-500 sm:w-auto">
           Checkout

@@ -3,6 +3,7 @@ import { Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import Header from "@/components/layout/Header";
+import AuthProvider from "@/providers/userContext";
 
 const playfairDisplay = Playfair_Display({
   subsets: ["latin"],
@@ -29,10 +30,12 @@ export default async function RootLayout({
         playfairDisplay.variable,
       )}
     >
-      <body className="min-h-full flex flex-col bg-background text-text overflow-x-hidden tracking-widest">
-        <Header />
-        {children}
-      </body>
+      <AuthProvider>
+        <body className="min-h-full flex flex-col bg-background text-text overflow-x-hidden tracking-widest">
+          <Header />
+          {children}
+        </body>
+      </AuthProvider>
     </html>
   );
 }

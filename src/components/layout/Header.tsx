@@ -14,15 +14,12 @@ import useStore from "@/store";
 import Link from "next/link";
 import Login from "./login";
 import ProfileDropdownMenu from "./ProfileDropdownMenu";
-import createClient from "@/lib/supabase/client";
+import { useAuth } from "../../providers/userContext";
 
 const navItems = ["Home", "Product", "Support"];
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
-  const [email, setEmail] = useState<string | null>(null);
   const {
     product,
     isAuthModalOpen,
@@ -32,50 +29,27 @@ export default function Header() {
     toggleCartModal,
     closeCartModal,
   } = useStore();
-
-  useEffect(() => {
-    const supabase = createClient();
-    let mounted = true;
-
-    const syncUser = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-
-      if (!mounted) {
-        return;
-      }
-
-      const metadata = (user?.user_metadata ?? {}) as Record<string, unknown>;
-      const image =
-        (metadata.avatar_url as string | undefined) ??
-        (metadata.picture as string | undefined) ??
-        null;
-
-      setIsAuthenticated(Boolean(user));
-      setAvatarUrl(image);
-      setEmail(user?.email ?? null);
-    };
-
-    void syncUser();
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange(() => {
-      void syncUser();
-    });
-
-    return () => {
-      mounted = false;
-      subscription.unsubscribe();
-    };
-  }, []);
-
+  const { isAuthenticated, avatarUrl, email, loading } = useAuth();
   useEffect(() => {
     if (isAuthenticated && isAuthModalOpen) {
       closeAuthModal();
     }
   }, [isAuthenticated, isAuthModalOpen, closeAuthModal]);
+
+  const accountControl = loading ? (
+    <div className="size-9 rounded-full bg-text/10 animate-pulse sm:size-10" />
+  ) : isAuthenticated ? (
+    <ProfileDropdownMenu avatarUrl={avatarUrl} email={email} />
+  ) : (
+    <button
+      type="button"
+      aria-label="Account"
+      className="grid size-9 place-items-center transition-colors hover:bg-text/5 sm:size-10"
+      onClick={openAuthModal}
+    >
+      <LuUserRound className="size-5" />
+    </button>
+  );
 
   return (
     <>
@@ -135,18 +109,7 @@ export default function Header() {
               </span>
               <LuShoppingCart className="size-5" />
             </button>
-            {isAuthenticated ? (
-              <ProfileDropdownMenu avatarUrl={avatarUrl} email={email} />
-            ) : (
-              <button
-                type="button"
-                aria-label="Account"
-                className="grid size-9 place-items-center  transition-colors hover:bg-text/5 sm:size-10"
-                onClick={openAuthModal}
-              >
-                <LuUserRound className="size-5" />
-              </button>
-            )}
+            {accountControl}
           </div>
         </div>
 
@@ -183,9 +146,9 @@ export default function Header() {
         </Modal>
       )}
 
-      {isAuthModalOpen && !isAuthenticated && (
+      {isAuthModalOpen && (
         <Modal closeFunc={closeAuthModal}>
-          <div className="grid place-items-center">
+          <div className="grid place-items-center gap-6 p-6">
             <Login />
           </div>
         </Modal>

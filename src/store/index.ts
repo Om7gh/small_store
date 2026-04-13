@@ -23,6 +23,7 @@ type Store = {
   closeCartModal: () => void;
   toggleCartModal: () => void;
   totalPrice: () => number;
+  removeAllProducts: () => void;
 };
 
 const useStore = create<Store>()(
@@ -117,6 +118,7 @@ const useStore = create<Store>()(
           0,
         );
       },
+      removeAllProducts: () => set({ product: [] }),
     }),
     {
       name: "cart",

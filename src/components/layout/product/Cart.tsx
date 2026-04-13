@@ -1,9 +1,11 @@
 "use client";
 import useStore from "@/store";
 import CartItem from "./CartItems";
+import { useRouter } from "next/navigation";
 
 export default function Cart() {
-  const { product, removeProduct, totalPrice } = useStore();
+  const { product, removeProduct, totalPrice, closeCartModal } = useStore();
+  const router = useRouter();
 
   if (product.length === 0)
     return (
@@ -36,7 +38,13 @@ export default function Cart() {
         ))}
       </div>
       <div className="mt-5 flex justify-stretch sm:mt-6 sm:justify-end">
-        <button className="inline-flex w-full items-center justify-center  bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-500 sm:w-auto">
+        <button
+          className="inline-flex w-full items-center justify-center  bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-500 sm:w-auto"
+          onClick={() => {
+            router.push("/checkout");
+            closeCartModal();
+          }}
+        >
           Checkout
         </button>
       </div>

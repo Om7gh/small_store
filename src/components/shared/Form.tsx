@@ -1,13 +1,15 @@
 "use client";
 
+import { useState, useTransition } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import createClient from "@/lib/supabase/client";
-import { useAuth } from "@/providers/userContext";
+import useStore from "@/store";
+import { createOrder, storeUserAddress } from "@/actions";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   state: z
@@ -25,9 +27,24 @@ const formSchema = z.object({
 
 type AddressFormInput = z.input<typeof formSchema>;
 type AddressFormValues = z.output<typeof formSchema>;
+type PrefillAddress = {
+  state?: string | null;
+  city?: string | null;
+  street?: string | null;
+  postalCode?: number | null;
+  phone?: number | null;
+};
 
-export default function CustomForm() {
-  const { id } = useAuth();
+export default function CustomForm({
+  address: formAddress,
+}: {
+  address: PrefillAddress | null;
+}) {
+  const [isConfirming, startConfirming] = useTransition();
+  const [orderError, setOrderError] = useState<string | null>(null);
+  const [orderSuccess, setOrderSuccess] = useState<string | null>(null);
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -36,31 +53,64 @@ export default function CustomForm() {
   } = useForm<AddressFormInput, undefined, AddressFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      state: "",
-      city: "",
-      street: "",
-      postalCode: undefined,
-      phone: undefined,
+      state: formAddress?.state ?? "",
+      city: formAddress?.city ?? "",
+      street: formAddress?.street ?? "",
+      postalCode: formAddress?.postalCode ?? undefined,
+      phone: formAddress?.phone ?? undefined,
     },
   });
+  const { product, removeAllProducts, totalPrice } = useStore();
 
   async function onSubmit(data: AddressFormValues) {
-    const supabase = createClient();
-    const addressRow = {
-      user_id: id,
-      state: data.state.trim(),
-      city: data.city.trim(),
-      street: data.street.trim(),
-      postal_code: data.postalCode,
-      phone: data.phone,
-    };
+    const formData = new FormData();
+    formData.append("state", data.state);
+    formData.append("city", data.city);
+    formData.append("street", data.street);
+    formData.append("postalCode", data.postalCode.toString());
+    formData.append("phone", data.phone.toString());
 
-    const { error } = await supabase.from("address").insert(addressRow);
-    if (error) {
-      console.error(error);
+    try {
+      await storeUserAddress(formData);
+      reset(data);
+    } catch (error) {
+      console.error("Error storing user address:", error);
+    }
+  }
+
+  function onConfirmOrder() {
+    setOrderError(null);
+    setOrderSuccess(null);
+
+    if (!product.length) {
+      setOrderError("Your cart is empty.");
       return;
     }
-    reset();
+
+    startConfirming(async () => {
+      try {
+        const orderTotal = totalPrice().toFixed(2);
+
+        await createOrder({
+          items: product.map((item) => ({
+            productId: item.id,
+            quantity: item.quantity,
+            priceAtTime: item.price,
+          })),
+          paymentMethod: "cod",
+        });
+
+        removeAllProducts();
+        setOrderSuccess(
+          `Order confirmed successfully. Total: ${orderTotal} MAD`,
+        );
+        router.push("/dashboard");
+      } catch (error) {
+        const message =
+          error instanceof Error ? error.message : "Failed to confirm order.";
+        setOrderError(message);
+      }
+    });
   }
 
   return (
@@ -68,7 +118,7 @@ export default function CustomForm() {
       <h2 className="self-start md:self-center">Fill Your Address:</h2>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="gap-6 place-items-center grid grid-cols-1 md:grid-cols-2  shadow-lg w-full"
+        className="gap-6 place-items-center grid grid-cols-1 md:grid-cols-2  shadow-lg w-full p-4"
       >
         <Field>
           <FieldLabel htmlFor="state">State</FieldLabel>
@@ -128,6 +178,27 @@ export default function CustomForm() {
           {isSubmitting ? "Saving..." : "Save address"}
         </Button>
       </form>
+
+      <div className="flex flex-col gap-4">
+        <h3 className="text-lg font-bold">Note:</h3>
+        <p className="text-sm text-muted-foreground">
+          Please make sure to fill in all the required fields accurately. This
+          information is crucial for the successful delivery of your order.
+        </p>
+        {orderError ? (
+          <p className="text-sm text-rose-500">{orderError}</p>
+        ) : null}
+        {orderSuccess ? (
+          <p className="text-sm text-emerald-500">{orderSuccess}</p>
+        ) : null}
+        <Button
+          type="button"
+          onClick={onConfirmOrder}
+          disabled={isConfirming || isSubmitting}
+        >
+          {isConfirming ? "Confirming..." : "confirm order"}
+        </Button>
+      </div>
     </div>
   );
 }

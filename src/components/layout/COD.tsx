@@ -29,10 +29,10 @@ export default function COD() {
 
       <div className="relative z-10 mx-auto w-full max-w-6xl">
         <div className="flex flex-col gap-3 sm:gap-4">
-          <p className="inline-flex w-fit items-center gap-2 border border-accent/40 bg-accent/10 px-3 py-1 text-xs font-semibold tracking-[0.18em] uppercase text-accent">
+          <p className="inline-flex w-fit items-center gap-2  bg-accent/10 px-3 py-1 text-xs font-semibold uppercase text-accent">
             Payment Method
           </p>
-          <h2 className="max-w-2xl text-2xl font-semibold tracking-tight text-text sm:text-3xl lg:text-4xl">
+          <h2 className="max-w-2xl text-2xl font-semibold  text-text sm:text-3xl lg:text-4xl">
             Cash on Delivery
           </h2>
           <p className="max-w-3xl text-sm leading-relaxed text-text/80 sm:text-base">
@@ -47,17 +47,13 @@ export default function COD() {
             return (
               <article
                 key={step.id}
-                className="group relative flex flex-col justify-between border border-text/10 bg-background/70 p-5 transition-colors duration-200 hover:border-accent/50 "
+                className="group relative flex flex-col justify-between  bg-background/70 p-5 transition-colors duration-200 hover:-accent/50 "
               >
-                <span className="absolute right-4 top-4 text-xs font-semibold tracking-[0.2em] text-accent/80">
-                  {step.id}
-                </span>
-
                 <div className="flex items-center justify-between gap-4">
                   <h3 className="text-lg font-semibold text-text">
                     {step.title}
                   </h3>
-                  <div className="grid h-11 w-11 place-items-center border border-accent/40 bg-accent/10 text-accent transition-colors duration-200 group-hover:bg-accent/20">
+                  <div className="grid h-11 w-11 place-items-center  bg-accent/10 text-accent transition-colors duration-200 group-hover:bg-accent/20">
                     <Icon size={22} />
                   </div>
                 </div>

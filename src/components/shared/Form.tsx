@@ -8,8 +8,11 @@ import { Button } from "@/components/ui/button";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import useStore from "@/store";
-import { createOrder, storeUserAddress } from "@/actions";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { storeUserAddress } from "@/actions/storeUserAddress";
+import { createOrder } from "@/actions/createOrder";
+import { updateAddressInfo } from "@/actions/updateAddressInfo";
 
 const formSchema = z.object({
   state: z
@@ -71,10 +74,25 @@ export default function CustomForm({
     formData.append("phone", data.phone.toString());
 
     try {
-      await storeUserAddress(formData);
+      if (
+        formAddress?.city &&
+        formAddress?.state &&
+        formAddress?.street &&
+        formAddress?.postalCode &&
+        formAddress?.phone
+      ) {
+        console.log("Updating address with data:", data);
+        await updateAddressInfo(formData);
+        toast.success("Address updated successfully.");
+      } else {
+        await storeUserAddress(formData);
+        toast.success("Address saved successfully.");
+      }
       reset(data);
+      toast.success("Address saved successfully.");
     } catch (error) {
       console.error("Error storing user address:", error);
+      toast.error("Failed to save address.");
     }
   }
 
@@ -104,10 +122,11 @@ export default function CustomForm({
         setOrderSuccess(
           `Order confirmed successfully. Total: ${orderTotal} MAD`,
         );
-        router.push("/dashboard");
+        router.push("/customer");
       } catch (error) {
         const message =
           error instanceof Error ? error.message : "Failed to confirm order.";
+        toast.error(message, { position: "top-center" });
         setOrderError(message);
       }
     });
@@ -175,7 +194,11 @@ export default function CustomForm({
           disabled={isSubmitting}
           className="w-full self-end bg-accent/50 py-4 px-6  hover:bg-primary/50 focus:bg-primary/50"
         >
-          {isSubmitting ? "Saving..." : "Save address"}
+          {isSubmitting
+            ? "Saving..."
+            : formAddress
+              ? "Update address"
+              : "Save address"}
         </Button>
       </form>
 

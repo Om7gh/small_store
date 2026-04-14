@@ -4,6 +4,8 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import Header from "@/components/layout/Header";
 import AuthProvider from "@/providers/userContext";
+import { Toaster } from "sonner";
+import { getUserProfile } from "@/actions/getProfileData";
 
 const playfairDisplay = Playfair_Display({
   subsets: ["latin"],
@@ -20,6 +22,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const data = await getUserProfile();
   return (
     <html
       lang="en"
@@ -32,8 +35,9 @@ export default async function RootLayout({
     >
       <AuthProvider>
         <body className="min-h-full flex flex-col bg-background text-text overflow-x-hidden tracking-widest">
-          <Header />
+          <Header role={data?.role || null} />
           {children}
+          <Toaster position="bottom-right" theme="dark" richColors />
         </body>
       </AuthProvider>
     </html>

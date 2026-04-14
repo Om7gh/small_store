@@ -20,16 +20,20 @@ import createClient from "@/lib/supabase/client";
 type ProfileDropdownMenuProps = {
   avatarUrl: string | null;
   email: string | null;
+  role: string | null;
 };
 
 export default function ProfileDropdownMenu({
   avatarUrl,
   email,
+  role,
 }: ProfileDropdownMenuProps) {
   const router = useRouter();
   const fallback = useMemo(() => {
     return (email ?? "U").slice(0, 1).toUpperCase();
   }, [email]);
+
+  const dashboardLink = role === "admin" ? "/admin" : "customer";
 
   const handleLogout = async () => {
     const supabase = createClient();
@@ -52,7 +56,7 @@ export default function ProfileDropdownMenu({
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
-            <Link href="/dashboard" className="flex items-center gap-2">
+            <Link href={dashboardLink} className="flex items-center gap-2">
               <BadgeCheckIcon className="size-4" />
               Dashboard
             </Link>

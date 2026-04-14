@@ -18,7 +18,7 @@ import { useAuth } from "../../providers/userContext";
 
 const navItems = ["Home", "Product", "Support"];
 
-export default function Header() {
+export default function Header({ role }: { role: string | null }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const {
     product,
@@ -39,7 +39,7 @@ export default function Header() {
   const accountControl = loading ? (
     <div className="size-9 rounded-full bg-text/10 animate-pulse sm:size-10" />
   ) : isAuthenticated ? (
-    <ProfileDropdownMenu avatarUrl={avatarUrl} email={email} />
+    <ProfileDropdownMenu avatarUrl={avatarUrl} email={email} role={role} />
   ) : (
     <button
       type="button"

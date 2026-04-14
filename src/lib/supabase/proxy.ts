@@ -40,44 +40,6 @@ export async function updateSession(request: NextRequest) {
 
   // IMPORTANT: If you remove getClaims() and you use server-side rendering
   // with the Supabase client, your users may be randomly logged out.
-  const { data } = await supabase.auth.getClaims();
-
-  const user = data?.claims;
-  const pathname = request.nextUrl.pathname;
-
-  const protectedRoutes = ["/dashboard", "/checkout"];
-  const guestOnlyRoutes = ["/auth/login", "/auth/signin-google"];
-
-  const isProtectedRoute = protectedRoutes.some(
-    (route) => pathname === route || pathname.startsWith(`${route}/`),
-  );
-
-  const isGuestOnlyRoute = guestOnlyRoutes.some(
-    (route) => pathname === route || pathname.startsWith(`${route}/`),
-  );
-
-  const redirectWithSessionCookies = (url: URL) => {
-    const response = NextResponse.redirect(url);
-    supabaseResponse.cookies.getAll().forEach((cookie) => {
-      response.cookies.set(cookie);
-    });
-    return response;
-  };
-
-  if (!user && isProtectedRoute) {
-    const url = request.nextUrl.clone();
-    url.pathname = "/auth/login";
-    url.search = `next=${encodeURIComponent(`${pathname}${request.nextUrl.search}`)}`;
-    return redirectWithSessionCookies(url);
-  }
-
-  if (user && isGuestOnlyRoute) {
-    const url = request.nextUrl.clone();
-    const next = request.nextUrl.searchParams.get("next") ?? "/";
-    url.pathname = next.startsWith("/") ? next : "/";
-    url.search = "";
-    return redirectWithSessionCookies(url);
-  }
 
   // IMPORTANT: You *must* return the supabaseResponse object as it is. If you're
   // creating a new response object with NextResponse.next() make sure to:
@@ -92,5 +54,5 @@ export async function updateSession(request: NextRequest) {
   // If this is not done, you may be causing the browser and server to go out
   // of sync and terminate the user's session prematurely!
 
-  return supabaseResponse;
+  return { supabaseResponse, supabase };
 }

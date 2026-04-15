@@ -15,7 +15,7 @@ export default async function CustomerPage() {
   return (
     <main className="mx-auto w-full max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
       <div className="space-y-2">
-        <h2 className="text-4xl font-normal">
+        <h2 className="text-3xl font-normal sm:text-4xl">
           Welcome{" "}
           <span className="text-accent font-bold capitalize">
             {user?.user_metadata?.full_name}
@@ -33,16 +33,16 @@ export default async function CustomerPage() {
               <Link
                 href={`/customer/orders/${order.id}`}
                 key={order.id}
-                className="shadow-lg  pb-4 flex justify-between items-center hover:shadow-lg transition-shadow"
+                className="flex flex-col gap-3 p-4 shadow-lg transition-shadow hover:shadow-lg sm:flex-row sm:items-center sm:justify-between"
               >
-                <p>Order ID: {order.id}</p>
-                <p>
+                <p className="break-all">Order ID: {order.id}</p>
+                <p className="sm:text-right">
                   Status:{" "}
                   <span className="font-bold text-orange-500">
                     {order.status}
                   </span>
                 </p>
-                <button className="mt-2 border-primary/80 border px-4 py-2 text-text hover:border-primary/60">
+                <button className="mt-1 self-start border border-primary/80 px-4 py-2 text-text hover:border-primary/60 sm:mt-0 sm:self-auto">
                   View Details
                 </button>
               </Link>

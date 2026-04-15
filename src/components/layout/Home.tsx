@@ -27,10 +27,10 @@ function HomeBanner({ product }: { product: ProductType; error?: any }) {
           Shop Now
         </Link>
       </div>
-      <div className="order-1 grid h-full w-full md:place-items-center md:order-2 rounded-full overflow-hidden">
+      <div className="order-1 grid h-full w-full md:place-items-center md:order-2 overflow-hidden px-8  bg-accent/5">
         <Image
-          width={900}
-          height={900}
+          width={1000}
+          height={1000}
           src={product?.image_url}
           alt={product?.name}
           className="h-65 w-full max-w-140  object-cover object-center shadow-md sm:h-85 md:h-105"

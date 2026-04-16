@@ -23,7 +23,8 @@ export async function proxy(request: NextRequest) {
   }
 
   const isAdminRoute = pathname.startsWith("/admin");
-  const isCustomerRoute = pathname.startsWith("/customer"); // or /dashboard
+  const isCustomerRoute =
+    pathname.startsWith("/customer") || pathname.startsWith("/checkout"); // or /dashboard
   const isGuestRoute = ["/auth/login", "/auth/signin-google"].some((r) =>
     pathname.startsWith(r),
   );

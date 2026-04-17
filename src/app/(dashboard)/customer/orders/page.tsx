@@ -19,7 +19,7 @@ export default async function page() {
             <Link
               href={`/customer/orders/${order.id}`}
               key={order.id}
-              className="flex flex-col gap-2 rounded-md bg-secondary p-4 shadow-sm transition-colors hover:bg-secondary/80 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between"
+              className="flex flex-col gap-2 rounded-md bg-black p-4 shadow-sm transition-colors hover:bg-black/80 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between"
             >
               <p className="break-all">
                 <strong>Order ID:</strong> {order.id}

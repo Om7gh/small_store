@@ -39,21 +39,21 @@ export async function proxy(request: NextRequest) {
     return response;
   };
 
-  if (isAdminRoute && userRole !== "admin") {
-    return redirect("/");
-  }
+  // if (isAdminRoute && userRole !== "admin") {
+  //   return redirect("/");
+  // }
 
-  if (isCustomerRoute && !user) {
-    return redirect("/auth/login");
-  }
+  // if (isCustomerRoute && !user) {
+  //   return redirect("/auth/login");
+  // }
 
-  if (isCustomerRoute && userRole === "admin") {
-    return redirect("/");
-  }
+  // if (isCustomerRoute && userRole === "admin") {
+  //   return redirect("/");
+  // }
 
-  if (user && isGuestRoute) {
-    return redirect("/");
-  }
+  // if (user && isGuestRoute) {
+  //   return redirect("/");
+  // }
 
   return supabaseResponse;
 }

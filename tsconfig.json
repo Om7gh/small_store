@@ -28,7 +28,9 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
-    "**/*.mts"
+    "**/*.mts",
+    "/home/omghazi/goinfre/small_store/.next/dev/types/**/*.ts",
+    "/home/omghazi/goinfre/small_store/.next/dev/dev/types/**/*.ts"
   ],
   "exclude": ["node_modules"]
 }

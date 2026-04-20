@@ -31,8 +31,8 @@ async function ActiveOrders() {
     .select("*")
     .eq("status", "pending");
   return (
-    <div className="rounded-lg p-6 shadow border-l-4 border-primary">
-      <h2 className="text-lg font-medium ">Active Orders</h2>
+    <div className="rounded-lg p-6 shadow border-l-4 border-primary bg-slate-950/20">
+      <h2 className="text-lg font-bold text-accent ">Active Orders</h2>
       <p className="mt-4 text-3xl font-semibold ">{data?.length || 0}</p>
     </div>
   );
@@ -43,8 +43,8 @@ async function TotalVisitors() {
 
   const { data } = await supabase.from("profiles").select("*");
   return (
-    <div className="rounded-lg p-6 shadow border-l-4 border-accent">
-      <h2 className="text-lg font-medium ">Total Customers</h2>
+    <div className="rounded-lg p-6 shadow border-l-4 border-accent bg-slate-950/20">
+      <h2 className="text-lg font-bold text-accent ">Total Customers</h2>
       <p className="mt-4 text-3xl font-semibold ">{data?.length || 0}</p>
     </div>
   );

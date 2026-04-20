@@ -51,8 +51,10 @@ export function TopProductSellsClient({ data }: TopProductSellsClientProps) {
   return (
     <Card className="bg-slate-950/20 shadow-inner shadow-accent">
       <CardHeader>
-        <CardTitle>Top Products</CardTitle>
-        <CardDescription>Top 5 by units sold</CardDescription>
+        <CardTitle className="text-accent font-bold">Top Products</CardTitle>
+        <CardDescription className="text-text font-medium">
+          Top 5 by units sold
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>

@@ -56,8 +56,10 @@ export function ConversionChartClient({
   return (
     <Card className="flex flex-col bg-slate-950/20 ">
       <CardHeader className="items-center pb-0">
-        <CardTitle>Order Conversion</CardTitle>
-        <CardDescription>
+        <CardTitle className="text-accent font-bold">
+          Order Conversion
+        </CardTitle>
+        <CardDescription className="text-text font-medium">
           {rateLabel} · Attempts: {totalAttempts.toLocaleString()}
         </CardDescription>
       </CardHeader>

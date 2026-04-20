@@ -54,8 +54,10 @@ export function ChartBarInteractiveClient({
     <Card className="py-0  shadow-2xl shadow-primary/10 rounded-3xl  bg-slate-950/20 ">
       <CardHeader className="flex flex-col items-stretch  p-0! sm:flex-row">
         <div className="flex flex-1 flex-col justify-center gap-1 px-6 pt-4 pb-3 sm:py-0!">
-          <CardTitle>Daily Revenue</CardTitle>
-          <CardDescription>Last 7 days overview</CardDescription>
+          <CardTitle className="text-accent font-bold">Daily Revenue</CardTitle>
+          <CardDescription className="text-text font-medium">
+            Last 7 days overview
+          </CardDescription>
         </div>
         <div className="flex bg-accent">
           {(["amount", "orderCount"] as const).map((key) => {

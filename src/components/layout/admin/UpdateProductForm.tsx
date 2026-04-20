@@ -134,7 +134,7 @@ export default function UpdateProductForm({
                     Change Image
                   </label>
                   <p className="text-xs text-slate-500">
-                    PNG, JPG, GIF up to 2MB
+                    PNG, JPG, GIF up to 1MB
                   </p>
                 </div>
               </div>

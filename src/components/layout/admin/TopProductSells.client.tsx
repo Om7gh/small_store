@@ -49,7 +49,7 @@ const chartConfig = {
 
 export function TopProductSellsClient({ data }: TopProductSellsClientProps) {
   return (
-    <Card className="bg-slate-950/20 rounded-2xl">
+    <Card className="bg-slate-950/20 shadow-inner shadow-accent">
       <CardHeader>
         <CardTitle>Top Products</CardTitle>
         <CardDescription>Top 5 by units sold</CardDescription>

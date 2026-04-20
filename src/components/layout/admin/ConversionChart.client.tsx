@@ -54,7 +54,7 @@ export function ConversionChartClient({
       : `Conversion rate: ${conversionRatePercentage.toFixed(2)}%`;
 
   return (
-    <Card className="flex flex-col bg-slate-950/20 rounded-2xl">
+    <Card className="flex flex-col bg-slate-950/20 ">
       <CardHeader className="items-center pb-0">
         <CardTitle>Order Conversion</CardTitle>
         <CardDescription>

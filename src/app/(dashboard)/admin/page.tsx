@@ -1,15 +1,16 @@
 import { ChartBarInteractive } from "@/components/layout/admin/Chart_bar_daily_data";
 import { ConversionChart } from "@/components/layout/admin/ConversionChart";
 import { TopProductSells } from "@/components/layout/admin/TopProductSells";
+import createClient from "@/lib/supabase/server";
 
 export default function AdminPage() {
   return (
     <main className="mx-auto w-full px-4 py-10 sm:px-6 lg:px-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
-      <TotalRevenue />
-      <ConversionRate />
       <ActiveOrders />
       <TotalVisitors />
-      <TotalProducsSells />
+      <TotalRevenue />
+      <ConversionRate />
+      <TotalProductsSells />
     </main>
   );
 }
@@ -22,24 +23,33 @@ function ConversionRate() {
   return <ConversionChart />;
 }
 
-function ActiveOrders() {
+async function ActiveOrders() {
+  const supabase = await createClient();
+
+  const { data } = await supabase
+    .from("orders")
+    .select("*")
+    .eq("status", "pending");
   return (
-    <div className="rounded-lg p-6 shadow">
+    <div className="rounded-lg p-6 shadow border-l-4 border-primary">
       <h2 className="text-lg font-medium ">Active Orders</h2>
-      <p className="mt-4 text-3xl font-semibold ">123</p>
+      <p className="mt-4 text-3xl font-semibold ">{data?.length || 0}</p>
     </div>
   );
 }
 
-function TotalVisitors() {
+async function TotalVisitors() {
+  const supabase = await createClient();
+
+  const { data } = await supabase.from("profiles").select("*");
   return (
-    <div className=" shadow">
-      <h2 className="text-lg font-medium ">Total Visiteur</h2>
-      <p className="mt-4 text-3xl font-semibold ">456</p>
+    <div className="rounded-lg p-6 shadow border-l-4 border-accent">
+      <h2 className="text-lg font-medium ">Total Customers</h2>
+      <p className="mt-4 text-3xl font-semibold ">{data?.length || 0}</p>
     </div>
   );
 }
 
-function TotalProducsSells() {
+function TotalProductsSells() {
   return <TopProductSells />;
 }

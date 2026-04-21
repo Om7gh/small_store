@@ -9,7 +9,7 @@ export function ProductInventoryTable({ product }: { product: any }) {
   return (
     <div className="flex w-full flex-col gap-4 rounded-lg  p-3 sm:p-4 lg:flex-row lg:items-center lg:justify-between">
       <li className="flex w-full list-none flex-col gap-4 sm:flex-row sm:items-start">
-        <div className="group h-40 w-full overflow-hidden border-2 border-accent/40 p-1 transition-all hover:p-0 sm:h-44 sm:w-44 md:h-52 md:w-52">
+        <div className="group h-40 w-full overflow-hidden border-2 border-accent/40 p-1 transition-all hover:p-0 sm:h-44 sm:w-54 md:h-52 md:w-72">
           <Image
             src={product.image_url}
             alt={product.name}

@@ -29,7 +29,7 @@ export default function Modal({
 
   return createPortal(
     <div
-      className="fixed inset-0 w-full h-full bg-slate-50/50 backdrop-blur-md z-100 flex items-center justify-center"
+      className="fixed inset-0 w-full h-full bg-background/20 backdrop-blur-md z-100 flex items-center justify-center"
       ref={overlayRef}
       onClick={handleOverlayClick}
     >

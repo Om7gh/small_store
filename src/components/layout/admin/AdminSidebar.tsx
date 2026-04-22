@@ -64,11 +64,6 @@ const SIDEBAR_CONFIG = [
         href: "/admin/users/overview",
         icon: <Users size={18} />,
       },
-      {
-        name: "Create User",
-        href: "/admin/users/create",
-        icon: <UserPlus size={18} />,
-      },
     ],
   },
   {
@@ -78,11 +73,6 @@ const SIDEBAR_CONFIG = [
         name: "Transactions",
         href: "/admin/orders/overview",
         icon: <CreditCard size={18} />,
-      },
-      {
-        name: "New Transaction",
-        href: "/admin/orders/new",
-        icon: <Bell size={18} />,
       },
     ],
   },

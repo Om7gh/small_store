@@ -5,12 +5,12 @@ import createClient from "@/lib/supabase/server";
 
 export default function AdminPage() {
   return (
-    <main className="mx-auto w-full px-4 py-10 sm:px-6 lg:px-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
-      <ActiveOrders />
-      <TotalVisitors />
+    <main className="mx-auto w-full px-4 py-10 sm:px-6 lg:px-8 grid grid-cols-1 gap-6 sm:grid-cols-3">
       <TotalRevenue />
       <ConversionRate />
       <TotalProductsSells />
+      <ActiveOrders />
+      <TotalVisitors />
     </main>
   );
 }

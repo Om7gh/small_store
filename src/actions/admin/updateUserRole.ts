@@ -12,11 +12,6 @@ export default async function updateUserRole(userId: string, newRole: string) {
     .eq("id", userId)
     .single();
 
-  console.log("Current user role:", user?.role);
-  if (user?.role !== "admin") {
-    throw new Error("Unauthorized");
-  }
-
   const { error } = await supabase
     .from("profiles")
     .update({ role: newRole })

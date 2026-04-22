@@ -57,7 +57,7 @@ export function TopProductSellsClient({ data }: TopProductSellsClientProps) {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig}>
+        <ChartContainer config={chartConfig} className=" p-0">
           <BarChart
             accessibilityLayer
             data={data}
@@ -100,7 +100,7 @@ function TopProductTooltip({ active, payload }: TopProductTooltipProps) {
   }
 
   return (
-    <div className="grid min-w-52 gap-2 rounded-lg border border-border/50 bg-background px-3 py-2 text-xs shadow-xl">
+    <div className="grid min-w-52 gap-2 rounded-lg border border-border/50 bg-background px-3 py-2 text-xs shadow-xl ">
       <div className="flex items-center gap-3">
         {item.imageUrl ? (
           <Image

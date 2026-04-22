@@ -1,16 +1,15 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
 import {
   Table,
   TableBody,
-  TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { ProductInventoryTable } from "./ProductList";
 import { Fragment, useEffect, useState } from "react";
-import getUserData from "@/actions/admin/getUserData";
+import getProductsByRange from "@/actions/admin/getProductsByRange";
 import { toast } from "sonner";
 import {
   Pagination,
@@ -21,8 +20,9 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { usePathname } from "next/navigation";
 
-export default function UserList({
+export default function FetchProductList({
   from,
   to,
   currentPage,
@@ -33,14 +33,11 @@ export default function UserList({
   currentPage: number;
   itemLimit: number;
 }) {
-  const router = useRouter();
   const pathname = usePathname();
+  const [products, setProducts] = useState<any[]>([]);
+  const [total, setTotal] = useState(0);
 
-  const [users, setUsers] = useState<any[]>([]);
-  const [phoneNumbers, setPhoneNumbers] = useState<any[]>([]);
-  const [totalUsers, setTotalUsers] = useState(0);
-
-  const totalPages = Math.max(1, Math.ceil(totalUsers / itemLimit));
+  const totalPages = Math.max(1, Math.ceil(total / itemLimit));
 
   const createPageHref = (page: number) => `${pathname}?page=${page}`;
 
@@ -56,66 +53,52 @@ export default function UserList({
     return Array.from(pages).sort((a, b) => a - b);
   };
 
-  async function fetchUsers() {
+  async function fetchProducts() {
     try {
-      const data = await getUserData(from, to);
-      setUsers(data?.users ?? []);
-      setPhoneNumbers(data?.phoneNumbers ?? []);
-      setTotalUsers(data?.totalUsers ?? 0);
+      const { products, totalProducts } = await getProductsByRange(from, to);
+      setProducts(products ?? []);
+      setTotal(totalProducts || 0);
     } catch (error) {
-      toast.error("Failed to fetch users. Please try again.");
-      console.error("Error fetching users:", error);
+      toast.error("Failed to fetch products. Please try again later.");
+      console.error("Error fetching products:", error);
     }
   }
 
   useEffect(() => {
-    fetchUsers();
+    fetchProducts();
   }, [from, to]);
 
   return (
     <div className="mt-6">
-      <Table className="w-full table-auto border-collapse">
+      <Table className="w-full">
         <TableHeader>
           <TableRow>
-            <TableHead className="border-b px-4 py-2 text-left text-sm font-semibold text-accent/80">
+            <TableHead className="px-3 py-2 text-accent font-bold">
+              Image
+            </TableHead>
+            <TableHead className="px-3 py-2 text-accent font-bold">
               Name
             </TableHead>
-            <TableHead className="border-b px-4 py-2 text-left text-sm font-semibold text-accent/80">
-              Email
+            <TableHead className="px-3 py-2 text-accent font-bold">
+              Description
             </TableHead>
-            <TableHead className="border-b px-4 py-2 text-left text-sm font-semibold text-accent/80">
-              Role
+            <TableHead className="px-3 py-2 text-accent font-bold">
+              Stock
             </TableHead>
-            <TableHead className="border-b px-4 py-2 text-left text-sm font-semibold text-accent/80">
-              Phone
+            <TableHead className="px-3 py-2 text-accent font-bold">
+              Price
             </TableHead>
-            <TableHead className="border-b px-4 py-2 text-left text-sm font-semibold text-accent/80">
-              Edit Role
+            <TableHead className="px-3 py-2 text-accent font-bold">
+              Category
+            </TableHead>
+            <TableHead className="px-3 py-2 text-accent font-bold">
+              Actions
             </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {users?.map((user) => (
-            <TableRow key={user.id}>
-              <TableCell className="border-b px-4 py-2">
-                {user.full_name}
-              </TableCell>
-              <TableCell className="border-b px-4 py-2">{user.email}</TableCell>
-              <TableCell className="border-b px-4 py-2">{user.role}</TableCell>
-              <TableCell className="border-b px-4 py-2">
-                {phoneNumbers?.find((pn) => pn.user_id === user.id)?.phone}
-              </TableCell>
-              <TableCell className="border-b px-4 py-2">
-                <button
-                  className="rounded bg-accent/10 text-accent px-3 py-1 text-sm  hover:bg-accent/90 hover:text-text transition-colors"
-                  onClick={() => {
-                    router.push(`/admin/users/${user.id}`);
-                  }}
-                >
-                  Edit Role
-                </button>
-              </TableCell>
-            </TableRow>
+          {products?.map((product) => (
+            <ProductInventoryTable key={product.id} product={product} />
           ))}
         </TableBody>
       </Table>

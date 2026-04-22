@@ -71,7 +71,7 @@ export function ChartBarInteractiveClient({
                 <span className="text-xs text-text/80 uppercase tracking-wide font-black">
                   {chartConfig[key].label}
                 </span>
-                <span className="text-lg leading-none font-bold sm:text-3xl">
+                <span className="text-sm leading-none font-bold sm:text-xl">
                   {total[key].toLocaleString()}
                 </span>
               </button>
@@ -82,7 +82,7 @@ export function ChartBarInteractiveClient({
       <CardContent className="px-2 sm:p-6">
         <ChartContainer
           config={chartConfig}
-          className="aspect-auto h-44 w-full [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-transparent"
+          className="aspect-auto h-52 w-full [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-transparent"
         >
           <BarChart
             accessibilityLayer
@@ -110,7 +110,7 @@ export function ChartBarInteractiveClient({
             <ChartTooltip
               content={
                 <ChartTooltipContent
-                  className="w-37"
+                  className="w-24"
                   labelFormatter={(value) => {
                     return new Date(value).toLocaleDateString("en-US", {
                       month: "short",

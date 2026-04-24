@@ -8,7 +8,11 @@ import { FaArrowRightLong } from "react-icons/fa6";
 export default function ProductCard({ product }: { product: ProductType }) {
   const pathname = usePathname();
   const redirectUrl =
-    pathname === "/" ? `product/${product.id}` : `./${product.id}`;
+    pathname === "/" || pathname === "/product"
+      ? `product/${product.id}`
+      : pathname === "/product"
+        ? `./${product.id}`
+        : "";
   return (
     <Link
       href={redirectUrl}

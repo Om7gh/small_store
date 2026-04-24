@@ -1,6 +1,6 @@
 import CreateOrdersTable from "@/components/layout/admin/OrdersTable";
 
-const ITEM_LIMIT = 10;
+const ITEM_LIMIT = 8;
 
 type OrdersOverviewPageProps = {
   searchParams?: Promise<{ page?: string }>;

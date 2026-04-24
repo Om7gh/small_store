@@ -1,3 +1,4 @@
+"use client";
 import {
   Carousel,
   CarouselContent,
@@ -8,6 +9,8 @@ import {
 import { ProductType } from "@/type/ProductType";
 import Image from "next/image";
 import Link from "next/link";
+import Autoplay from "embla-carousel-autoplay";
+import { useRef } from "react";
 
 function HomeBanner({ product }: { product: ProductType; error?: any }) {
   return (
@@ -41,8 +44,9 @@ function HomeBanner({ product }: { product: ProductType; error?: any }) {
 }
 
 export default function Home({ products }: { products: ProductType[] }) {
+  const plugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: true }));
   return (
-    <Carousel className="w-full">
+    <Carousel className="w-full" plugins={[plugin.current]}>
       <CarouselContent>
         <CarouselItem>
           <HomeBanner product={products[0]} />

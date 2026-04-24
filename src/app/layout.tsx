@@ -6,6 +6,7 @@ import Header from "@/components/layout/Header";
 import AuthProvider from "@/providers/userContext";
 import { Toaster } from "sonner";
 import { getUserProfile } from "@/actions/getProfileData";
+import CodAnimation from "@/components/shared/Cod_animation";
 
 const playfairDisplay = Playfair_Display({
   subsets: ["latin"],

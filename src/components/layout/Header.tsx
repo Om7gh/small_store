@@ -15,6 +15,7 @@ import Link from "next/link";
 import Login from "./login";
 import ProfileDropdownMenu from "./ProfileDropdownMenu";
 import { useAuth } from "../../providers/userContext";
+import CodAnimation from "../shared/Cod_animation";
 
 const navItems = ["Home", "Product", "Support"];
 
@@ -29,7 +30,7 @@ export default function Header({ role }: { role: string | null }) {
     toggleCartModal,
     closeCartModal,
   } = useStore();
-  const { isAuthenticated, avatarUrl, email, loading } = useAuth();
+  const { isAuthenticated, avatarUrl, email, loading, full_name } = useAuth();
   useEffect(() => {
     if (isAuthenticated && isAuthModalOpen) {
       closeAuthModal();
@@ -39,7 +40,12 @@ export default function Header({ role }: { role: string | null }) {
   const accountControl = loading ? (
     <div className="size-9 rounded-full bg-text/10 animate-pulse sm:size-10" />
   ) : isAuthenticated ? (
-    <ProfileDropdownMenu avatarUrl={avatarUrl} email={email} role={role} />
+    <ProfileDropdownMenu
+      avatarUrl={avatarUrl}
+      email={email}
+      role={role}
+      full_name={full_name}
+    />
   ) : (
     <button
       type="button"
@@ -54,6 +60,7 @@ export default function Header({ role }: { role: string | null }) {
   return (
     <>
       <header className="sticky top-0 z-30 border-b border-text/10 bg-background/95 backdrop-blur">
+        <CodAnimation />
         <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:h-20 lg:px-8">
           <div className="flex items-center gap-3">
             <button

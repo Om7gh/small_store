@@ -1,3 +1,4 @@
+import COD from "@/components/layout/COD";
 import Home from "@/components/layout/Home";
 import Product from "@/components/layout/product/Product";
 import createClient from "@/lib/supabase/server";
@@ -20,6 +21,7 @@ export default async function Page() {
   return (
     <main className="mx-auto my-8 w-full max-w-7xl px-4 sm:px-6 lg:px-8 ">
       <Home products={lastThreeProducts || []} />
+      <COD />
       <Product products={allProducts || []} title="Our Latest Products" />
     </main>
   );

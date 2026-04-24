@@ -1,6 +1,6 @@
 import FetchProductList from "@/components/layout/admin/FetchProductList";
 
-const ITEM_LIMIT = 10;
+const ITEM_LIMIT = 8;
 
 type ProductsOverviewPageProps = {
   searchParams?: Promise<{ page?: string }>;

@@ -1,6 +1,6 @@
 import UserList from "@/components/layout/admin/UserList";
 
-export const ITEM_LIMIT = 10;
+export const ITEM_LIMIT = 6;
 
 export type UsersOverviewPageProps = {
   searchParams?: Promise<{ page?: string }>;
